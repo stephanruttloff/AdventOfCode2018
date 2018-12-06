@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 
 namespace Day1
 {
@@ -6,7 +8,25 @@ namespace Day1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var frequencyCorrection =
+                File
+                    .ReadAllLines(@"input.txt")
+                    .Select(x =>
+                    {
+                        switch (x.Substring(0, 1))
+                        {
+                            case @"+":
+                                return int.Parse(x.Substring(1));
+                            case @"-":
+                                return int.Parse(x.Substring(1)) * -1;
+                            default:
+                                throw new InvalidOperationException();
+                        }
+                    })
+                    .Sum();
+
+            Console.WriteLine(frequencyCorrection);
+            Console.ReadKey();
         }
     }
 }
